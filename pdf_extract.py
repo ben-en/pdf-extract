@@ -1,8 +1,14 @@
 import bottle
+import shutil
 import hashlib
 import argparse
 import platform
 import subprocess
+import os
+from os import getcwd
+from os.path import join
+
+
 def hash_url(url):
     md5 = hashlib.md5()
     md5.update(bytes(url))
@@ -18,7 +24,21 @@ if __name__ == "__main__":
                         'description to use on pdf download page')
     args = parser.parse_args()
 
+    original_dir = getcwd()
     bottle.TEMPLATE_PATH.insert(0, original_dir)
+    shell = True
+
+
+    # Assemble path
+    pdf_hash = hash_url(args.pdf)
+    path = join(getcwd(), pdf_hash)
+    if os.path.exists(path):
+        shutil.rmtree(path)
+        os.mkdir(path)
+    else:
+        os.mkdir(path)
+    shutil.move(join(original_dir, args.pdf), join(path, args.pdf))
+
     # Identify OS
     OS = platform.system()
     if OS == 'Windows':
