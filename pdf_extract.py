@@ -1,3 +1,4 @@
+import bottle
 import os
 import hashlib
 import argparse
@@ -17,6 +18,7 @@ if __name__ == "__main__":
                         'description to use on pdf download page')
     args = parser.parse_args()
 
+    bottle.TEMPLATE_PATH.insert(0, original_dir)
     # Identify OS
     OS = platform.system()
     if OS == 'Windows':
@@ -25,3 +27,9 @@ if __name__ == "__main__":
     else:
         subprocess.call("convert " + join(path, args.pdf) + "[0] " +
                          join(path, "cover.jpg"), shell=True)
+
+    # Build landing page
+    html = bottle.template('template', title=args.pdf[:-4], desc=args.description)
+    with open(join(path, 'index.html'), 'w') as f:
+        f.write(html)
+    print html
