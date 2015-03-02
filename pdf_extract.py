@@ -1,6 +1,11 @@
 import os
+import hashlib
 import argparse
 import subprocess
+def hash_url(url):
+    md5 = hashlib.md5()
+    md5.update(bytes(url))
+    return md5.hexdigest()
 
 
 if __name__ == "__main__":
