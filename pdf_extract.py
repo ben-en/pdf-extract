@@ -1,7 +1,7 @@
 import bottle
-import os
 import hashlib
 import argparse
+import platform
 import subprocess
 def hash_url(url):
     md5 = hashlib.md5()
