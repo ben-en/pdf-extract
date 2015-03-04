@@ -11,7 +11,7 @@ from os.path import join
 
 def hash_url(url):
     md5 = hashlib.md5()
-    md5.update(bytes(url))
+    md5.update(bytes(url, 'utf-8'))
     return md5.hexdigest()
 
 
