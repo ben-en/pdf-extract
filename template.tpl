@@ -4,8 +4,8 @@
     </head>
     <body>
         <h1>{{ title }}</h1>
-        <img src="cover.jpg">
-        <p>{{ desc }}</p>
+        <p>{{ desc or "Sorry, no description is available for this file." }}</p>
         <p>You can download the file <a href={{ title }}.pdf>here</a>.</p>
+        <img src="cover.jpg">
     </body>
 </html>
